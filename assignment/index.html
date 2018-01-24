@@ -22,6 +22,7 @@
         center: [39.9522, -75.1639],
         zoom: 14
       });
+
       var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
         attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         subdomains: 'abcd',
@@ -55,10 +56,28 @@
 
       ===================== */
 
-      var jsonToCsv = function(json) { console.log(json); };
+var data = healthCenters;
 
+var jsonToCsv = function(json) { console.log(json); };
 
-      var addMarkers = function(map) {};
+jsonToCsv(data)
+
+var Tooth = new L.icon({
+  iconUrl: 'images/Tooth_fairy_4280.png',
+  iconSize: [38, 95]
+});
+
+var addMarkers = function(map) {
+  for (i=0; i<healthCenters.length; i++) {
+    if (healthCenters[i].DENTAL_PHONE === "N/A") {
+    L.marker([healthCenters[i].LAT, healthCenters[i].LNG]).addTo(map).bindPopup(healthCenters[i].NAME);
+  }
+  else  {
+  L.marker([healthCenters[i].LAT, healthCenters[i].LNG],{icon: Tooth}).addTo(map).bindPopup(healthCenters[i].NAME);
+}
+}
+}
+addMarkers(map);
 
       /* =====================
 
@@ -66,9 +85,6 @@
 
       ===================== */
 
-
-      jsonToCsv(healthCenters);
-      addMarkers(map);
     </script>
     <!--Your code ends here-->
   </body>
